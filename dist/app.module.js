@@ -8,20 +8,50 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const apollo_1 = require("@nestjs/apollo");
+const Joi = require("joi");
 const common_1 = require("@nestjs/common");
 const graphql_1 = require("@nestjs/graphql");
 const restaurants_module_1 = require("./restaurants/restaurants.module");
+const typeorm_1 = require("@nestjs/typeorm");
+const config_1 = require("@nestjs/config");
+const restaurant_entity_1 = require("./restaurants/entities/restaurant.entity");
+const users_module_1 = require("./users/users.module");
+const common_module_1 = require("./common/common.module");
+const user_entity_1 = require("./users/entities/user.entity");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            restaurants_module_1.RestaurantsModule,
+            config_1.ConfigModule.forRoot({
+                isGlobal: true,
+                envFilePath: process.env.NODE_ENV === 'dev' ? '.env.dev' : '.env.test',
+                ignoreEnvFile: process.env.NODE_ENV === 'prod',
+                validationSchema: Joi.object({
+                    NODE_ENV: Joi.string().valid('dev', 'prod').required(),
+                    DB_HOST: Joi.string().required(),
+                    DB_PORT: Joi.string().required(),
+                    DB_USERNAME: Joi.string().required(),
+                    DB_NAME: Joi.string().required(),
+                }),
+            }),
+            typeorm_1.TypeOrmModule.forRoot({
+                type: 'postgres',
+                host: process.env.DB_HOST,
+                port: +process.env.DB_PORT,
+                username: process.env.DB_USERNAME,
+                database: process.env.DB_NAME,
+                synchronize: process.env.NODE_ENV !== 'prod',
+                logging: process.env.NODE_ENV !== 'prod',
+                entities: [restaurant_entity_1.Restaurant, user_entity_1.User],
+            }),
             graphql_1.GraphQLModule.forRoot({
                 driver: apollo_1.ApolloDriver,
                 autoSchemaFile: true,
             }),
             restaurants_module_1.RestaurantsModule,
+            users_module_1.UsersModule,
+            common_module_1.CommonModule,
         ],
         controllers: [],
         providers: [],
