@@ -37,5 +37,14 @@ export class UsersResolver {
 
   // loginß
   @Mutation((returns) => LoginOutput)
-  async login(@Args('input') loginInput: LoginInput) {}
+  async login(@Args('input') loginInput: LoginInput) {
+    try {
+      return this.userService.login(loginInput);
+    } catch (error) {
+      return {
+        ok: false,
+        error,
+      };
+    }
+  }
 }

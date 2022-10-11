@@ -18,6 +18,7 @@ const restaurant_entity_1 = require("./restaurants/entities/restaurant.entity");
 const users_module_1 = require("./users/users.module");
 const common_module_1 = require("./common/common.module");
 const user_entity_1 = require("./users/entities/user.entity");
+const jwt_module_1 = require("./jwt/jwt.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -33,6 +34,7 @@ AppModule = __decorate([
                     DB_PORT: Joi.string().required(),
                     DB_USERNAME: Joi.string().required(),
                     DB_NAME: Joi.string().required(),
+                    SECRET_KEY: Joi.string().required(),
                 }),
             }),
             typeorm_1.TypeOrmModule.forRoot({
@@ -52,6 +54,7 @@ AppModule = __decorate([
             restaurants_module_1.RestaurantsModule,
             users_module_1.UsersModule,
             common_module_1.CommonModule,
+            jwt_module_1.JwtModule,
         ],
         controllers: [],
         providers: [],
