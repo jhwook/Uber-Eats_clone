@@ -1,7 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ok } from 'assert';
 import { Repository } from 'typeorm';
 import { CreateAccountInput } from './dtos/create-account.dto';
+import { LoginInput } from './dtos/login.dto';
 import { User } from './entities/user.entity';
 
 @Injectable()
@@ -26,6 +28,23 @@ export class UserService {
     } catch (e) {
       //make error
       return { ok: false, error: "Couldn't create account" };
+    }
+  }
+
+  async login({ email, password }: LoginInput) {
+    try {
+      const user = await this.users.findOne({ where: { email } });
+      if (!user) {
+        return {
+          ok: false,
+          error: 'User not found',
+        };
+      }
+      const passwordCorrect = await user.checkPassword(password);
+      return ok;
+    } catch (err) {
+      console.log(err);
+      throw new InternalServerErrorException();
     }
   }
 }
