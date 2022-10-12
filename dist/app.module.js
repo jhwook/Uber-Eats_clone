@@ -34,7 +34,7 @@ AppModule = __decorate([
                     DB_PORT: Joi.string().required(),
                     DB_USERNAME: Joi.string().required(),
                     DB_NAME: Joi.string().required(),
-                    SECRET_KEY: Joi.string().required(),
+                    PRIVATE_KEY: Joi.string().required(),
                 }),
             }),
             typeorm_1.TypeOrmModule.forRoot({
@@ -50,11 +50,14 @@ AppModule = __decorate([
             graphql_1.GraphQLModule.forRoot({
                 driver: apollo_1.ApolloDriver,
                 autoSchemaFile: true,
+                context: ({ req }) => ({ user: req['user'] }),
             }),
             restaurants_module_1.RestaurantsModule,
             users_module_1.UsersModule,
             common_module_1.CommonModule,
-            jwt_module_1.JwtModule,
+            jwt_module_1.JwtModule.forRoot({
+                privateKey: process.env.PRIVATE_KEY,
+            }),
         ],
         controllers: [],
         providers: [],
