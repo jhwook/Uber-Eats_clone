@@ -12,14 +12,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Restaurant = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const class_validator_1 = require("class-validator");
+const core_entity_1 = require("../../common/entities/core.entity");
 const typeorm_1 = require("typeorm");
-let Restaurant = class Restaurant {
+const category_entity_1 = require("./category.entity");
+let Restaurant = class Restaurant extends core_entity_1.CoreEntity {
 };
-__decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)(),
-    (0, graphql_1.Field)((type) => Number),
-    __metadata("design:type", Number)
-], Restaurant.prototype, "id", void 0);
 __decorate([
     (0, graphql_1.Field)((type) => String),
     (0, typeorm_1.Column)(),
@@ -28,12 +25,11 @@ __decorate([
     __metadata("design:type", String)
 ], Restaurant.prototype, "name", void 0);
 __decorate([
-    (0, graphql_1.Field)((type) => Boolean, { nullable: true }),
-    (0, typeorm_1.Column)({ default: true }),
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsBoolean)(),
-    __metadata("design:type", Boolean)
-], Restaurant.prototype, "isVegan", void 0);
+    (0, graphql_1.Field)((type) => String),
+    (0, typeorm_1.Column)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], Restaurant.prototype, "coverImg", void 0);
 __decorate([
     (0, graphql_1.Field)((type) => String),
     (0, typeorm_1.Column)(),
@@ -41,17 +37,10 @@ __decorate([
     __metadata("design:type", String)
 ], Restaurant.prototype, "address", void 0);
 __decorate([
-    (0, graphql_1.Field)((type) => String),
-    (0, typeorm_1.Column)(),
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], Restaurant.prototype, "ownersName", void 0);
-__decorate([
-    (0, graphql_1.Field)((type) => String),
-    (0, typeorm_1.Column)(),
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], Restaurant.prototype, "categoryName", void 0);
+    (0, graphql_1.Field)((type) => category_entity_1.Category),
+    (0, typeorm_1.ManyToOne)((type) => category_entity_1.Category, (category) => category.restaurants),
+    __metadata("design:type", category_entity_1.Category)
+], Restaurant.prototype, "category", void 0);
 Restaurant = __decorate([
     (0, graphql_1.InputType)({ isAbstract: true }),
     (0, graphql_1.ObjectType)(),
