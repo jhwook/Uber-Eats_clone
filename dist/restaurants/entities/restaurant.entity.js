@@ -13,6 +13,7 @@ exports.Restaurant = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const class_validator_1 = require("class-validator");
 const core_entity_1 = require("../../common/entities/core.entity");
+const user_entity_1 = require("../../users/entities/user.entity");
 const typeorm_1 = require("typeorm");
 const category_entity_1 = require("./category.entity");
 let Restaurant = class Restaurant extends core_entity_1.CoreEntity {
@@ -37,12 +38,20 @@ __decorate([
     __metadata("design:type", String)
 ], Restaurant.prototype, "address", void 0);
 __decorate([
-    (0, graphql_1.Field)((type) => category_entity_1.Category),
-    (0, typeorm_1.ManyToOne)((type) => category_entity_1.Category, (category) => category.restaurants),
+    (0, graphql_1.Field)((type) => category_entity_1.Category, { nullable: true }),
+    (0, typeorm_1.ManyToOne)((type) => category_entity_1.Category, (category) => category.restaurants, {
+        nullable: true,
+        onDelete: 'SET NULL',
+    }),
     __metadata("design:type", category_entity_1.Category)
 ], Restaurant.prototype, "category", void 0);
+__decorate([
+    (0, graphql_1.Field)((type) => user_entity_1.User),
+    (0, typeorm_1.ManyToOne)((type) => user_entity_1.User, (user) => user.restaurants),
+    __metadata("design:type", user_entity_1.User)
+], Restaurant.prototype, "owner", void 0);
 Restaurant = __decorate([
-    (0, graphql_1.InputType)({ isAbstract: true }),
+    (0, graphql_1.InputType)('RestaurantInputType', { isAbstract: true }),
     (0, graphql_1.ObjectType)(),
     (0, typeorm_1.Entity)()
 ], Restaurant);

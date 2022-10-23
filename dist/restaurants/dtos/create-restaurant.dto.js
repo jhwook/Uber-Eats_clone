@@ -6,13 +6,24 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateRestaurantDto = void 0;
+exports.CreateRestaurantOutput = exports.CreateRestaurantInput = void 0;
 const graphql_1 = require("@nestjs/graphql");
+const output_dto_1 = require("../../common/dtos/output.dto");
 const restaurant_entity_1 = require("../entities/restaurant.entity");
-let CreateRestaurantDto = class CreateRestaurantDto extends (0, graphql_1.OmitType)(restaurant_entity_1.Restaurant, ['id']) {
+let CreateRestaurantInput = class CreateRestaurantInput extends (0, graphql_1.OmitType)(restaurant_entity_1.Restaurant, [
+    'id',
+    'category',
+    'owner',
+]) {
 };
-CreateRestaurantDto = __decorate([
+CreateRestaurantInput = __decorate([
     (0, graphql_1.InputType)()
-], CreateRestaurantDto);
-exports.CreateRestaurantDto = CreateRestaurantDto;
+], CreateRestaurantInput);
+exports.CreateRestaurantInput = CreateRestaurantInput;
+let CreateRestaurantOutput = class CreateRestaurantOutput extends output_dto_1.CoreOutput {
+};
+CreateRestaurantOutput = __decorate([
+    (0, graphql_1.ObjectType)()
+], CreateRestaurantOutput);
+exports.CreateRestaurantOutput = CreateRestaurantOutput;
 //# sourceMappingURL=create-restaurant.dto.js.map
