@@ -10,13 +10,18 @@ exports.RestaurantsModule = void 0;
 const common_1 = require("@nestjs/common");
 const restaurant_entity_1 = require("./entities/restaurant.entity");
 const restaurants_resolver_1 = require("./restaurants.resolver");
+const category_repository_1 = require("./repositories/category.repository");
 const typeorm_1 = require("@nestjs/typeorm");
 const restaurant_service_1 = require("./restaurant.service");
+const typeorm_ex_module_1 = require("../typeorm/typeorm-ex.module");
 let RestaurantsModule = class RestaurantsModule {
 };
 RestaurantsModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([restaurant_entity_1.Restaurant])],
+        imports: [
+            typeorm_1.TypeOrmModule.forFeature([restaurant_entity_1.Restaurant]),
+            typeorm_ex_module_1.TypeOrmExModule.forCustomRepository([category_repository_1.CategoryRepository]),
+        ],
         providers: [restaurants_resolver_1.RestaurantResolver, restaurant_service_1.RestaurantService],
     })
 ], RestaurantsModule);

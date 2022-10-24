@@ -47,9 +47,15 @@ __decorate([
 ], Restaurant.prototype, "category", void 0);
 __decorate([
     (0, graphql_1.Field)((type) => user_entity_1.User),
-    (0, typeorm_1.ManyToOne)((type) => user_entity_1.User, (user) => user.restaurants),
+    (0, typeorm_1.ManyToOne)((type) => user_entity_1.User, (user) => user.restaurants, {
+        onDelete: 'CASCADE',
+    }),
     __metadata("design:type", user_entity_1.User)
 ], Restaurant.prototype, "owner", void 0);
+__decorate([
+    (0, typeorm_1.RelationId)((restaurant) => restaurant.owner),
+    __metadata("design:type", Number)
+], Restaurant.prototype, "ownerId", void 0);
 Restaurant = __decorate([
     (0, graphql_1.InputType)('RestaurantInputType', { isAbstract: true }),
     (0, graphql_1.ObjectType)(),

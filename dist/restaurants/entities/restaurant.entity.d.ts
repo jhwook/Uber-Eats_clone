@@ -7,4 +7,5 @@ export declare class Restaurant extends CoreEntity {
     address: string;
     category: Category;
     owner: User;
+    ownerId: number;
 }
