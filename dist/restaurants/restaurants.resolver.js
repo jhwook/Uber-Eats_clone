@@ -12,14 +12,20 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RestaurantResolver = void 0;
+exports.CategoryResolver = exports.RestaurantResolver = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const auth_user_decorator_1 = require("../auth/auth-user.decorator");
 const role_decorator_1 = require("../auth/role.decorator");
 const user_entity_1 = require("../users/entities/user.entity");
+const all_categories_dto_1 = require("./dtos/all-categories.dto");
+const category_dto_1 = require("./dtos/category.dto");
 const create_restaurant_dto_1 = require("./dtos/create-restaurant.dto");
 const delete_restaurant_dto_1 = require("./dtos/delete-restaurant.dto");
 const edit_restaurant_dto_1 = require("./dtos/edit-restaurant.dto");
+const restaurant_dto_1 = require("./dtos/restaurant.dto");
+const restaurants_dto_1 = require("./dtos/restaurants.dto");
+const search_restaurant_dto_1 = require("./dtos/search-restaurant.dto");
+const category_entity_1 = require("./entities/category.entity");
 const restaurant_entity_1 = require("./entities/restaurant.entity");
 const restaurant_service_1 = require("./restaurant.service");
 let RestaurantResolver = class RestaurantResolver {
@@ -34,6 +40,15 @@ let RestaurantResolver = class RestaurantResolver {
     }
     deleteRestaurant(owner, deleteRestaurantInput) {
         return this.restaurantService.deleteRestaurant(owner, deleteRestaurantInput);
+    }
+    restaurants(restaurantsInput) {
+        return this.restaurantService.allRestaurants(restaurantsInput);
+    }
+    restaurant(restaurantInput) {
+        return this.restaurantService.findRestaurantById(restaurantInput);
+    }
+    searchRestaurant(searchRestaurantInput) {
+        return this.restaurantService.searchRestaurantByName(searchRestaurantInput);
     }
 };
 __decorate([
@@ -66,9 +81,69 @@ __decorate([
         delete_restaurant_dto_1.DeleteRestaurantInput]),
     __metadata("design:returntype", Promise)
 ], RestaurantResolver.prototype, "deleteRestaurant", null);
+__decorate([
+    (0, graphql_1.Query)((returns) => restaurants_dto_1.RestuarantsOutput),
+    __param(0, (0, graphql_1.Args)('input')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [restaurants_dto_1.RestaurantsInput]),
+    __metadata("design:returntype", Promise)
+], RestaurantResolver.prototype, "restaurants", null);
+__decorate([
+    (0, graphql_1.Query)((returns) => restaurant_dto_1.RestaurantOutput),
+    __param(0, (0, graphql_1.Args)('input')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [restaurant_dto_1.RestaurantInput]),
+    __metadata("design:returntype", Promise)
+], RestaurantResolver.prototype, "restaurant", null);
+__decorate([
+    (0, graphql_1.Query)((returns) => search_restaurant_dto_1.SearchRestaurantOutput),
+    __param(0, (0, graphql_1.Args)('input')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [search_restaurant_dto_1.SearchRestaurantInput]),
+    __metadata("design:returntype", Promise)
+], RestaurantResolver.prototype, "searchRestaurant", null);
 RestaurantResolver = __decorate([
     (0, graphql_1.Resolver)((of) => restaurant_entity_1.Restaurant),
     __metadata("design:paramtypes", [restaurant_service_1.RestaurantService])
 ], RestaurantResolver);
 exports.RestaurantResolver = RestaurantResolver;
+let CategoryResolver = class CategoryResolver {
+    constructor(restaurantService) {
+        this.restaurantService = restaurantService;
+    }
+    restaurantCount(category) {
+        return this.restaurantService.countRestaurants(category);
+    }
+    allCategories() {
+        return this.restaurantService.allCategories();
+    }
+    category(categoryInput) {
+        return this.restaurantService.findCategoryBySlug(categoryInput);
+    }
+};
+__decorate([
+    (0, graphql_1.ResolveField)((type) => graphql_1.Int),
+    __param(0, (0, graphql_1.Parent)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [category_entity_1.Category]),
+    __metadata("design:returntype", Promise)
+], CategoryResolver.prototype, "restaurantCount", null);
+__decorate([
+    (0, graphql_1.Query)((type) => all_categories_dto_1.AllCategoriesOutput),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], CategoryResolver.prototype, "allCategories", null);
+__decorate([
+    (0, graphql_1.Query)((type) => category_dto_1.CategoryOutput),
+    __param(0, (0, graphql_1.Args)('input')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [category_dto_1.CategoryInput]),
+    __metadata("design:returntype", Promise)
+], CategoryResolver.prototype, "category", null);
+CategoryResolver = __decorate([
+    (0, graphql_1.Resolver)((of) => category_entity_1.Category),
+    __metadata("design:paramtypes", [restaurant_service_1.RestaurantService])
+], CategoryResolver);
+exports.CategoryResolver = CategoryResolver;
 //# sourceMappingURL=restaurants.resolver.js.map

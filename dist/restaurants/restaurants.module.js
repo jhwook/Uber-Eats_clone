@@ -22,7 +22,7 @@ RestaurantsModule = __decorate([
             typeorm_1.TypeOrmModule.forFeature([restaurant_entity_1.Restaurant]),
             typeorm_ex_module_1.TypeOrmExModule.forCustomRepository([category_repository_1.CategoryRepository]),
         ],
-        providers: [restaurants_resolver_1.RestaurantResolver, restaurant_service_1.RestaurantService],
+        providers: [restaurants_resolver_1.RestaurantResolver, restaurant_service_1.RestaurantService, restaurants_resolver_1.CategoryResolver],
     })
 ], RestaurantsModule);
 exports.RestaurantsModule = RestaurantsModule;

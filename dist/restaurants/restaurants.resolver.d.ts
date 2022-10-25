@@ -1,7 +1,13 @@
 import { User } from 'src/users/entities/user.entity';
+import { AllCategoriesOutput } from './dtos/all-categories.dto';
+import { CategoryInput, CategoryOutput } from './dtos/category.dto';
 import { CreateRestaurantInput, CreateRestaurantOutput } from './dtos/create-restaurant.dto';
 import { DeleteRestaurantInput, DeleteRestaurantOutput } from './dtos/delete-restaurant.dto';
 import { EditRestaurantInput, EditRestaurantOutput } from './dtos/edit-restaurant.dto';
+import { RestaurantInput, RestaurantOutput } from './dtos/restaurant.dto';
+import { RestaurantsInput, RestuarantsOutput } from './dtos/restaurants.dto';
+import { SearchRestaurantInput, SearchRestaurantOutput } from './dtos/search-restaurant.dto';
+import { Category } from './entities/category.entity';
 import { RestaurantService } from './restaurant.service';
 export declare class RestaurantResolver {
     private readonly restaurantService;
@@ -9,4 +15,14 @@ export declare class RestaurantResolver {
     createRestaurant(authUser: User, createRestaurantInput: CreateRestaurantInput): Promise<CreateRestaurantOutput>;
     editRestaurant(owner: User, editRestaurantInput: EditRestaurantInput): Promise<EditRestaurantOutput>;
     deleteRestaurant(owner: User, deleteRestaurantInput: DeleteRestaurantInput): Promise<DeleteRestaurantOutput>;
+    restaurants(restaurantsInput: RestaurantsInput): Promise<RestuarantsOutput>;
+    restaurant(restaurantInput: RestaurantInput): Promise<RestaurantOutput>;
+    searchRestaurant(searchRestaurantInput: SearchRestaurantInput): Promise<SearchRestaurantOutput>;
+}
+export declare class CategoryResolver {
+    private readonly restaurantService;
+    constructor(restaurantService: RestaurantService);
+    restaurantCount(category: Category): Promise<number>;
+    allCategories(): Promise<AllCategoriesOutput>;
+    category(categoryInput: CategoryInput): Promise<CategoryOutput>;
 }
