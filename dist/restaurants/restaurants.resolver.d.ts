@@ -1,6 +1,7 @@
 import { User } from 'src/users/entities/user.entity';
 import { AllCategoriesOutput } from './dtos/all-categories.dto';
 import { CategoryInput, CategoryOutput } from './dtos/category.dto';
+import { CreateDishInput, CreateDishOutput } from './dtos/create-dish.dto';
 import { CreateRestaurantInput, CreateRestaurantOutput } from './dtos/create-restaurant.dto';
 import { DeleteRestaurantInput, DeleteRestaurantOutput } from './dtos/delete-restaurant.dto';
 import { EditRestaurantInput, EditRestaurantOutput } from './dtos/edit-restaurant.dto';
@@ -25,4 +26,9 @@ export declare class CategoryResolver {
     restaurantCount(category: Category): Promise<number>;
     allCategories(): Promise<AllCategoriesOutput>;
     category(categoryInput: CategoryInput): Promise<CategoryOutput>;
+}
+export declare class DishResolver {
+    private readonly restaurantService;
+    constructor(restaurantService: RestaurantService);
+    createDish(owner: User, createDishInput: CreateDishInput): Promise<CreateDishOutput>;
 }

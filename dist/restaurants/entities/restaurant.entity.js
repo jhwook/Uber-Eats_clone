@@ -16,6 +16,7 @@ const core_entity_1 = require("../../common/entities/core.entity");
 const user_entity_1 = require("../../users/entities/user.entity");
 const typeorm_1 = require("typeorm");
 const category_entity_1 = require("./category.entity");
+const dish_entity_1 = require("./dish.entity");
 let Restaurant = class Restaurant extends core_entity_1.CoreEntity {
 };
 __decorate([
@@ -56,6 +57,11 @@ __decorate([
     (0, typeorm_1.RelationId)((restaurant) => restaurant.owner),
     __metadata("design:type", Number)
 ], Restaurant.prototype, "ownerId", void 0);
+__decorate([
+    (0, graphql_1.Field)((type) => [dish_entity_1.Dish]),
+    (0, typeorm_1.OneToMany)((type) => dish_entity_1.Dish, (dish) => dish.restaurant),
+    __metadata("design:type", Array)
+], Restaurant.prototype, "menu", void 0);
 Restaurant = __decorate([
     (0, graphql_1.InputType)('RestaurantInputType', { isAbstract: true }),
     (0, graphql_1.ObjectType)(),

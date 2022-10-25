@@ -12,13 +12,14 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CategoryResolver = exports.RestaurantResolver = void 0;
+exports.DishResolver = exports.CategoryResolver = exports.RestaurantResolver = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const auth_user_decorator_1 = require("../auth/auth-user.decorator");
 const role_decorator_1 = require("../auth/role.decorator");
 const user_entity_1 = require("../users/entities/user.entity");
 const all_categories_dto_1 = require("./dtos/all-categories.dto");
 const category_dto_1 = require("./dtos/category.dto");
+const create_dish_dto_1 = require("./dtos/create-dish.dto");
 const create_restaurant_dto_1 = require("./dtos/create-restaurant.dto");
 const delete_restaurant_dto_1 = require("./dtos/delete-restaurant.dto");
 const edit_restaurant_dto_1 = require("./dtos/edit-restaurant.dto");
@@ -26,6 +27,7 @@ const restaurant_dto_1 = require("./dtos/restaurant.dto");
 const restaurants_dto_1 = require("./dtos/restaurants.dto");
 const search_restaurant_dto_1 = require("./dtos/search-restaurant.dto");
 const category_entity_1 = require("./entities/category.entity");
+const dish_entity_1 = require("./entities/dish.entity");
 const restaurant_entity_1 = require("./entities/restaurant.entity");
 const restaurant_service_1 = require("./restaurant.service");
 let RestaurantResolver = class RestaurantResolver {
@@ -146,4 +148,27 @@ CategoryResolver = __decorate([
     __metadata("design:paramtypes", [restaurant_service_1.RestaurantService])
 ], CategoryResolver);
 exports.CategoryResolver = CategoryResolver;
+let DishResolver = class DishResolver {
+    constructor(restaurantService) {
+        this.restaurantService = restaurantService;
+    }
+    createDish(owner, createDishInput) {
+        return this.restaurantService.createDish(owner, createDishInput);
+    }
+};
+__decorate([
+    (0, graphql_1.Mutation)((type) => create_dish_dto_1.CreateDishOutput),
+    (0, role_decorator_1.Role)(['Owner']),
+    __param(0, (0, auth_user_decorator_1.AuthUser)()),
+    __param(1, (0, graphql_1.Args)('input')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [user_entity_1.User,
+        create_dish_dto_1.CreateDishInput]),
+    __metadata("design:returntype", void 0)
+], DishResolver.prototype, "createDish", null);
+DishResolver = __decorate([
+    (0, graphql_1.Resolver)((of) => dish_entity_1.Dish),
+    __metadata("design:paramtypes", [restaurant_service_1.RestaurantService])
+], DishResolver);
+exports.DishResolver = DishResolver;
 //# sourceMappingURL=restaurants.resolver.js.map

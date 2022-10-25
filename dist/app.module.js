@@ -23,6 +23,7 @@ const jwt_middleware_1 = require("./jwt/jwt.middleware");
 const auth_module_1 = require("./auth/auth.module");
 const verification_entity_1 = require("./users/entities/verification.entity");
 const category_entity_1 = require("./restaurants/entities/category.entity");
+const dish_entity_1 = require("./restaurants/entities/dish.entity");
 let AppModule = class AppModule {
     configure(consumer) {
         consumer
@@ -54,7 +55,7 @@ AppModule = __decorate([
                 database: process.env.DB_NAME,
                 synchronize: process.env.NODE_ENV !== 'prod',
                 logging: false,
-                entities: [restaurant_entity_1.Restaurant, user_entity_1.User, verification_entity_1.Verification, category_entity_1.Category],
+                entities: [restaurant_entity_1.Restaurant, user_entity_1.User, verification_entity_1.Verification, category_entity_1.Category, dish_entity_1.Dish],
             }),
             graphql_1.GraphQLModule.forRoot({
                 driver: apollo_1.ApolloDriver,

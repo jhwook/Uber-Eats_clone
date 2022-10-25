@@ -19,6 +19,7 @@ import { JwtMiddleware } from './jwt/jwt.middleware';
 import { AuthModule } from './auth/auth.module';
 import { Verification } from './users/entities/verification.entity';
 import { Category } from './restaurants/entities/category.entity';
+import { Dish } from './restaurants/entities/dish.entity';
 
 @Module({
   imports: [
@@ -44,7 +45,7 @@ import { Category } from './restaurants/entities/category.entity';
       synchronize: process.env.NODE_ENV !== 'prod',
       logging: false,
       // logging: process.env.NODE_ENV !== 'prod',
-      entities: [Restaurant, User, Verification, Category],
+      entities: [Restaurant, User, Verification, Category, Dish],
     }),
     GraphQLModule.forRoot({
       driver: ApolloDriver,
