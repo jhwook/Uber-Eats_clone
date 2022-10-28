@@ -13,6 +13,7 @@ exports.Restaurant = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const class_validator_1 = require("class-validator");
 const core_entity_1 = require("../../common/entities/core.entity");
+const order_entity_1 = require("../../orders/entities/order.entity");
 const user_entity_1 = require("../../users/entities/user.entity");
 const typeorm_1 = require("typeorm");
 const category_entity_1 = require("./category.entity");
@@ -53,6 +54,11 @@ __decorate([
     }),
     __metadata("design:type", user_entity_1.User)
 ], Restaurant.prototype, "owner", void 0);
+__decorate([
+    (0, graphql_1.Field)((type) => [order_entity_1.Order]),
+    (0, typeorm_1.OneToMany)((type) => order_entity_1.Order, (order) => order.restaurant),
+    __metadata("design:type", Array)
+], Restaurant.prototype, "orders", void 0);
 __decorate([
     (0, typeorm_1.RelationId)((restaurant) => restaurant.owner),
     __metadata("design:type", Number)

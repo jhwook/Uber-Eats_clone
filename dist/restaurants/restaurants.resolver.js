@@ -21,7 +21,9 @@ const all_categories_dto_1 = require("./dtos/all-categories.dto");
 const category_dto_1 = require("./dtos/category.dto");
 const create_dish_dto_1 = require("./dtos/create-dish.dto");
 const create_restaurant_dto_1 = require("./dtos/create-restaurant.dto");
+const delete_dish_dto_1 = require("./dtos/delete-dish.dto");
 const delete_restaurant_dto_1 = require("./dtos/delete-restaurant.dto");
+const edit_dish_dto_1 = require("./dtos/edit-dish.dto");
 const edit_restaurant_dto_1 = require("./dtos/edit-restaurant.dto");
 const restaurant_dto_1 = require("./dtos/restaurant.dto");
 const restaurants_dto_1 = require("./dtos/restaurants.dto");
@@ -155,6 +157,12 @@ let DishResolver = class DishResolver {
     createDish(owner, createDishInput) {
         return this.restaurantService.createDish(owner, createDishInput);
     }
+    editDish(owner, editDishInput) {
+        return this.restaurantService.editDish(owner, editDishInput);
+    }
+    deleteDish(owner, deleteDishInput) {
+        return this.restaurantService.deleteDish(owner, deleteDishInput);
+    }
 };
 __decorate([
     (0, graphql_1.Mutation)((type) => create_dish_dto_1.CreateDishOutput),
@@ -164,8 +172,28 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [user_entity_1.User,
         create_dish_dto_1.CreateDishInput]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], DishResolver.prototype, "createDish", null);
+__decorate([
+    (0, graphql_1.Mutation)((type) => edit_dish_dto_1.EditDishOutput),
+    (0, role_decorator_1.Role)(['Owner']),
+    __param(0, (0, auth_user_decorator_1.AuthUser)()),
+    __param(1, (0, graphql_1.Args)('input')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [user_entity_1.User,
+        edit_dish_dto_1.EditDishInput]),
+    __metadata("design:returntype", Promise)
+], DishResolver.prototype, "editDish", null);
+__decorate([
+    (0, graphql_1.Mutation)((type) => delete_dish_dto_1.DeleteDishOutput),
+    (0, role_decorator_1.Role)(['Owner']),
+    __param(0, (0, auth_user_decorator_1.AuthUser)()),
+    __param(1, (0, graphql_1.Args)('input')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [user_entity_1.User,
+        delete_dish_dto_1.DeleteDishInput]),
+    __metadata("design:returntype", Promise)
+], DishResolver.prototype, "deleteDish", null);
 DishResolver = __decorate([
     (0, graphql_1.Resolver)((of) => dish_entity_1.Dish),
     __metadata("design:paramtypes", [restaurant_service_1.RestaurantService])
