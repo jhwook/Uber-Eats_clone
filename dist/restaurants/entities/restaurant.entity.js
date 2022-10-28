@@ -55,14 +55,14 @@ __decorate([
     __metadata("design:type", user_entity_1.User)
 ], Restaurant.prototype, "owner", void 0);
 __decorate([
+    (0, typeorm_1.RelationId)((restaurant) => restaurant.owner),
+    __metadata("design:type", Number)
+], Restaurant.prototype, "ownerId", void 0);
+__decorate([
     (0, graphql_1.Field)((type) => [order_entity_1.Order]),
     (0, typeorm_1.OneToMany)((type) => order_entity_1.Order, (order) => order.restaurant),
     __metadata("design:type", Array)
 ], Restaurant.prototype, "orders", void 0);
-__decorate([
-    (0, typeorm_1.RelationId)((restaurant) => restaurant.owner),
-    __metadata("design:type", Number)
-], Restaurant.prototype, "ownerId", void 0);
 __decorate([
     (0, graphql_1.Field)((type) => [dish_entity_1.Dish]),
     (0, typeorm_1.OneToMany)((type) => dish_entity_1.Dish, (dish) => dish.restaurant),

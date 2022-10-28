@@ -9,7 +9,7 @@ export declare class Restaurant extends CoreEntity {
     address: string;
     category: Category;
     owner: User;
-    orders: Order[];
     ownerId: number;
+    orders: Order[];
     menu: Dish[];
 }
