@@ -70,8 +70,18 @@ AppModule = __decorate([
             }),
             graphql_1.GraphQLModule.forRoot({
                 driver: apollo_1.ApolloDriver,
+                installSubscriptionHandlers: true,
                 autoSchemaFile: true,
-                context: ({ req }) => ({ user: req['user'] }),
+                context: ({ req, connection }) => {
+                    if (req) {
+                        return {
+                            user: req['user'],
+                        };
+                    }
+                    else {
+                        console.log(connection);
+                    }
+                },
             }),
             jwt_module_1.JwtModule.forRoot({
                 privateKey: process.env.PRIVATE_KEY,
