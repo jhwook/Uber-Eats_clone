@@ -62,14 +62,17 @@ import { OrderItem } from './orders/entities/order-item.entity';
       driver: ApolloDriver,
       installSubscriptionHandlers: true,
       autoSchemaFile: true,
-      context: ({ req, connection }) => {
-        if (req) {
-          return {
-            user: req['user'],
-          };
-        } else {
-          console.log(connection);
-        }
+      subscriptions: {
+        'subscriptions-transport-ws': {
+          onConnect: (context) => {
+            console.log(context);
+            const token = context['x-jwt'];
+            return { token };
+          },
+        },
+      },
+      context: ({ req }) => {
+        return { token: req.headers['x-jwt'] };
       },
     }),
     JwtModule.forRoot({
@@ -84,10 +87,11 @@ import { OrderItem } from './orders/entities/order-item.entity';
   controllers: [],
   providers: [],
 })
-export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(JwtMiddleware)
-      .forRoutes({ path: '/graphql', method: RequestMethod.POST });
-  }
-}
+export class AppModule {}
+// implements NestModule {
+//   configure(consumer: MiddlewareConsumer) {
+//     consumer
+//       .apply(JwtMiddleware)
+//       .forRoutes({ path: '/graphql', method: RequestMethod.POST });
+//   }
+// }
