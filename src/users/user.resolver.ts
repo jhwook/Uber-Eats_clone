@@ -35,8 +35,6 @@ export class UsersResolver {
   @Role(['Any'])
   @Query((returns) => User)
   me(@AuthUser() authUser: User) {
-    console.log(authUser);
-
     return authUser;
   }
 

@@ -69,7 +69,6 @@ AppModule = __decorate([
                 subscriptions: {
                     'subscriptions-transport-ws': {
                         onConnect: (context) => {
-                            console.log(context);
                             const token = context['x-jwt'];
                             return { token };
                         },

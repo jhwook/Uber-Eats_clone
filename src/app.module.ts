@@ -65,7 +65,6 @@ import { OrderItem } from './orders/entities/order-item.entity';
       subscriptions: {
         'subscriptions-transport-ws': {
           onConnect: (context) => {
-            console.log(context);
             const token = context['x-jwt'];
             return { token };
           },
